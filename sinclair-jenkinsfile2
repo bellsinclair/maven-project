@@ -1,79 +1,4 @@
-[3:44 PM, 5/22/2022] +1 (651) 508-7665: pipeline {
-    agent any
-   
-   environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
-
-    options { buildDiscarder(logRotator(artifactDaysToKeepStr: '',
-     artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'))
-      disableConcurrentBuilds() }
-      
-
-    stages {
-        
-       stage('Setup parameters') {
-            steps {
-                script { 
-                    properties([
-                        parameters([
-                          
-
-                            string(
-                                defaultValue: '001', 
-                                name: 'ImageTAG', 
-                                trim: true
-                            )
-                        ])
-                    ])
-                }
-      …
-[3:57 PM, 5/22/2022] Eric TX DevOps: pipeline {
-    agent any
-   
-   environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
-
-    options { buildDiscarder(logRotator(artifactDaysToKeepStr: '',
-     artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'))
-      disableConcurrentBuilds() }
-      
-
-    stages {
-        
-       stage('Setup parameters') {
-            steps {
-                script { 
-                    properties([
-                        parameters([
-                          
-
-                            string(
-                                defaultValue: '001', 
-                                name: 'ImageTAG', 
-                                trim: true
-                            )
-                        ])
-                    ])
-                }
-      …
-[4:14 PM, 5/22/2022] Eric TX DevOps: jenkins-docker1
-[4:14 PM, 5/22/2022] Eric TX DevOps: jenkins-docker2
-[4:17 PM, 5/22/2022] Eric TX DevOps: #! /bin/bash
- rm -rf maven-project || true
-  git clone  https://devopseasylearning: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@github.com/devopseasylearning/maven-project.git
-  rm -rf maven-project/webapp.war || true 
-  ls ltr  maven-project/
-  cp -r webapp.war maven-project/
-  cd maven-project/ 
-  git add -A 
-  
-  git config --global user.email "info@devopseasylearning.com"
-  git config --global user.name "devopseasylearning"
-  git commit -m "updating artifact"
-git push   https://devopseasylearning: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@github.com/devopseasylearning/maven-project.git
-[5:37 PM, 5/22/2022] Eric TX DevOps: pipeline {
+pipeline {
     agent {
                 label 'node1'
             }
@@ -250,8 +175,3 @@ stage('build ') {
                 '''
             }
         }
-
-
-
-    }
-}
