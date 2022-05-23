@@ -2,7 +2,7 @@ pipeline {
     agent any
    
    environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+		labelHUB_CREDENTIALS=credentials('labelhub')
 	}
 
     options { buildDiscarder(logRotator(artifactDaysToKeepStr: '',
@@ -35,7 +35,7 @@ pipeline {
 
         stage('clean') {
             agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 label { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -48,7 +48,7 @@ pipeline {
 
         stage('compile') {
             agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 label { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -60,7 +60,7 @@ pipeline {
 
 stage('validate') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 label { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -74,7 +74,7 @@ stage('validate') {
 
 stage('test') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 label { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -86,7 +86,7 @@ stage('test') {
 
 stage('package') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 label { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -101,7 +101,7 @@ stage('package') {
 
 stage('verify') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 label { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -114,7 +114,7 @@ stage('verify') {
 
 stage('install') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 label { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -126,7 +126,7 @@ stage('install') {
        
        stage('SonarQube analysis') {
             agent {
-                docker {
+                label {
 
                   image 'sonarsource/sonar-scanner-cli:4.7.0'
                 }
@@ -148,7 +148,7 @@ stage('build ') {
 
             steps {
                sh '''
-           docker build -t devopseasylearning2021/eric:$ImageTAG .
+           label build -t devopseasylearning2021/eric:$ImageTAG .
                '''
             }
         }
@@ -158,25 +158,25 @@ stage('build ') {
 
 
 
-      stage('Docker Login') {
+      stage('label Login') {
 
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'echo $labelHUB_CREDENTIALS_PSW | label login -u $labelHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
            
             
 
-     stage('Docker push ') {
+     stage('label push ') {
             steps {
                sh '''
-              docker push devopseasylearning2021/eric:$ImageTAG 
+              label push devopseasylearning2021/eric:$ImageTAG 
                 '''
             }
         }
 
-        
+
 
     }
 }
